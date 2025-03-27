@@ -1,0 +1,2233 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Tracks service's SLO and error budget consumption.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 6062,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 35,
+      "panels": [],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 7,
+        "x": 0,
+        "y": 1
+      },
+      "id": 69,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "$operation_day_start",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Operation day start (MSK)",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 7,
+        "y": 1
+      },
+      "id": 39,
+      "maxDataPoints": 1480,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(order_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "General error budget left",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 9,
+        "x": 15,
+        "y": 1
+      },
+      "id": 38,
+      "maxDataPoints": 1480,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\ndays_in_month() * 24 * ($error_budget) -\r\n(running_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(order_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) /60 / 60\r\n",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "General error budget left",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 7,
+        "y": 3
+      },
+      "id": 77,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Client scenario budget left",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 9,
+        "x": 15,
+        "y": 3
+      },
+      "id": 78,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\ndays_in_month() * 24 * ($error_budget) -\r\n(running_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(order_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) /60 / 60\r\n",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Client scenario budget left",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 7,
+        "x": 0,
+        "y": 5
+      },
+      "id": 70,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "$operation_day_end",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Operation day end (MSK)",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 7,
+        "y": 5
+      },
+      "id": 67,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(order_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Fulfillment budget left",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 9,
+        "x": 15,
+        "y": 5
+      },
+      "id": 68,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\ndays_in_month() * 24 * ($error_budget) -\r\n(running_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(order_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) /60 / 60\r\n",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Fulfillment budget left",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 8,
+        "x": 7,
+        "y": 7
+      },
+      "id": 30,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "$service_slo_target",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Target SLO",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 9,
+        "x": 15,
+        "y": 7
+      },
+      "id": 28,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "days_in_month() * 24 * ($error_budget)",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Error Budget",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 0,
+        "y": 9
+      },
+      "id": 73,
+      "maxDataPoints": 1480,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1-$A",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "timeFrom": "12h",
+      "title": "Burn rate 12h",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 5,
+        "y": 9
+      },
+      "id": 74,
+      "maxDataPoints": 1480,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1-$A",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "timeFrom": "24h",
+      "title": "Burn rate 24h",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Если burn rate за неделю более 0.25% - значит есть риск не попасть в целевой бюджет ошибок за месяц",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 10,
+        "y": 9
+      },
+      "id": 80,
+      "maxDataPoints": 1480,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1-$A",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "timeFrom": "7d",
+      "title": "Burn rate 1 week",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Пытаемся предсказать % оставшегося бюджета через неделю на основании предыдущих данных",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 15,
+        "y": 9
+      },
+      "id": 95,
+      "maxDataPoints": 1480,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "1 week Prediction",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Совокупный по входным точкам и бизнес процессам бюджет ошибок, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 39,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "decimals": 5,
+          "mappings": [],
+          "noValue": "1",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.99
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.9952
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Budget left"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 50,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Budget left",
+          "refId": "I"
+        }
+      ],
+      "title": "General error budget",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Совокупный по входным точкам и бизнес процессам бюджет ошибок, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#16c481",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 39,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "decimals": 5,
+          "mappings": [],
+          "noValue": "1",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.99
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.9952
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Budget left"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "id": 76,
+      "maxDataPoints": 1062,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Budget left",
+          "refId": "I"
+        }
+      ],
+      "title": "Client scenario budget",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Совокупный по входным точкам и бизнес процессам бюджет ошибок, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#c5d977",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 39,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "decimals": 3,
+          "mappings": [],
+          "noValue": "1",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.99
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.9952
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Budget left"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "id": 66,
+      "maxDataPoints": 1062,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Budget left",
+          "refId": "I"
+        }
+      ],
+      "title": "Fulfillment budget",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Бюджет ошибок по продуктам, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "palette-classic",
+            "seriesBy": "last"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 1,
+            "axisSoftMin": 0.99,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "decimals": 3,
+          "mappings": [],
+          "noValue": "1",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.99
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.9952
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 111,
+      "options": {
+        "legend": {
+          "calcs": [
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Budget left - product 1",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Budget left - product 2",
+          "refId": "B"
+        }
+      ],
+      "title": "Product error budget",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 43
+      },
+      "id": 56,
+      "panels": [],
+      "title": "Budget per product",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "noValue": "100%",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.99
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.9952
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 44
+      },
+      "id": 52,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Budget left",
+          "refId": "I"
+        }
+      ],
+      "title": "product 1 error budget ",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 44
+      },
+      "id": 81,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1-$A",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "timeFrom": "24h",
+      "title": "product 2  Burn rate 24h",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Если burn rate за неделю более 0.25% - значит есть риск не попасть в целевой бюджет ошибок за месяц",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 44
+      },
+      "id": 82,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1-$A",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "timeFrom": "7d",
+      "title": "product 2  Burn rate 1 week",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-green",
+            "mode": "fixed",
+            "seriesBy": "last"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "noValue": "100%",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 0.99
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.9952
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 49
+      },
+      "id": 58,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Budget left",
+          "refId": "I"
+        }
+      ],
+      "title": "product 2  error budget",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 49
+      },
+      "id": 83,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1-$A",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "timeFrom": "24h",
+      "title": "product 2  Burn rate 24h",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "Если burn rate за неделю более 0.25% - значит есть риск не попасть в целевой бюджет ошибок за месяц",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 49
+      },
+      "id": 84,
+      "maxDataPoints": 1062,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "1-$A",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "timeFrom": "7d",
+      "title": "product 2 Burn rate 1 week",
+      "transparent": true,
+      "type": "stat"
+    }
+  ],
+  "preload": false,
+  "refresh": "5m",
+  "schemaVersion": 40,
+  "tags": [
+    "error_budget",
+    "SLO"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "Victoria-P01P02-shared",
+          "value": "d4a81b43-0ba6-421d-b5b2-98b00b2b6b5e"
+        },
+        "includeAll": false,
+        "label": "Datasource",
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "99.2",
+          "value": "99.2"
+        },
+        "hide": 2,
+        "name": "service_slo_target",
+        "query": "99.2",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "0.008",
+          "value": "0.008"
+        },
+        "hide": 2,
+        "name": "error_budget",
+        "query": "0.008",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "4",
+          "value": "4"
+        },
+        "includeAll": false,
+        "name": "operation_day_start",
+        "options": [
+          {
+            "selected": true,
+            "text": "4",
+            "value": "4"
+          }
+        ],
+        "query": "4",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "0",
+          "value": "0"
+        },
+        "includeAll": false,
+        "name": "operation_day_end",
+        "options": [
+          {
+            "selected": true,
+            "text": "0",
+            "value": "0"
+          }
+        ],
+        "query": "0",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now/M",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Error budget TEST",
+  "uid": "errorbudgettest",
+  "version": 10,
+  "weekStart": ""
+}
