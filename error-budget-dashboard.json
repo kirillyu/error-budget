@@ -308,7 +308,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "interval": "",
           "legendFormat": "",
           "range": true,
@@ -792,7 +792,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -875,7 +875,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -959,7 +959,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -1043,7 +1043,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "interval": "",
           "legendFormat": "",
           "range": true,
@@ -1059,7 +1059,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Совокупный по входным точкам и бизнес процессам бюджет ошибок, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "description": "Совокупный бюджет перед основной аудиторией",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1183,7 +1183,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1201,7 +1201,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Совокупный по входным точкам и бизнес процессам бюджет ошибок, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "description": "Бюджет критичного клиентского флоу с синхронным блокирующим влиянием на юзера",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1326,7 +1326,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1344,7 +1344,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Совокупный по входным точкам и бизнес процессам бюджет ошибок, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "description": "Асинхронный критичных флоу который тратит много денег но пользователь не блокируется в моменте",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1469,7 +1469,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100,\r\n    order_web_errors = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) default\r\n    duration_over_time(smkt_web_errors[:15s],16s)) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1487,7 +1487,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Бюджет ошибок по продуктам, с учетом времени работы сервиса (04:00-00:00). \nЕсли мы расходуем бюджет значит пользователь либо не может войти в приложение или оно долго открывается, либо не может пройти основной сценарий заказа или в процессе его прохождения пользователь получает большие отклики.\nСчитается только уникальное время недоступности, то есть недоступность нескольких сущностей не будет расходовать бюджет сильнее чем только одной из них.",
+      "description": "Разбивка по продуктам",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1590,7 +1590,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1606,7 +1606,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1701,7 +1701,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1774,7 +1774,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -1857,7 +1857,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    catalog_auth_responses = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(catalog_auth_responses[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -1950,7 +1950,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2022,7 +2022,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -2105,7 +2105,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < (3))\r\n)) / (days_in_month() * 24* 60 * 60)",
+          "expr": "WITH(\r\n    order = 100 * (1 - exp(-200 * rand())) < 100\r\n)\r\n\r\n((days_in_month() * 24* 60 * 60) -\r\nrunning_sum(\r\n    (duration_over_time(order[:15s],16s) ) or vector (0) ifnot (hour(time()[1h:1h] + timezone_offset(\"Europe/Moscow\")[1h:1h])[1h:1h] < ($operation_day_start))\r\n)) / (days_in_month() * 24* 60 * 60)",
           "hide": true,
           "interval": "",
           "legendFormat": "",
@@ -2228,6 +2228,6 @@
   "timezone": "",
   "title": "Error budget TEST",
   "uid": "errorbudgettest",
-  "version": 10,
+  "version": 15,
   "weekStart": ""
 }
